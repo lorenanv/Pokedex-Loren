@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pokedex</title>
+    <link rel="icon" type="image/x-icon" href="./src/img/pokeball.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jersey+10&family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/cartas.css">
+    <link rel="stylesheet" href="./css/ui-state.css">
+</head>
+<body>
+    <header>
+        <div id="header-left" onclick="location.reload()">
+            <img src="./src/img/pokeball.png" alt="Imagen de una Pokéball" width="2955px" height="2919px">
+            <h1>POKEDEX</h1>
+        </div>
+        <!-- Total POKEMON POKEDEX-->
+        <div id="header-right">
+            <div id="pokemonTotalNumber"></div>
+        </div>
+    </header>
+    
+    <main>
+        <!-- Sidebar: filtros y búsqueda -->
+        <aside id="sidebar">
+            <p>BUSCAR</p>
+            <input type="search" id="search-input" placeholder="¡Busca tu pokémon!">
+            
+            <p>TIPOS</p>
+            <div id="type-filters"></div>
+            
+            <p>GENERACIÓN</p>
+            <div id="generation-filters"></div>
+            
+            <p>ESTADISTICAS BASE</p>
+            <label for="hp-range">HP min:
+                <span id="hp-value">0</span>
+            </label>
+            <input type="range" id="hp-range" min="" max="200">
+            
+            <label for="atk-range">Ataque min:
+                <span id="atk-value">0</span>
+            </label>
+            <input type="range" id="atk-range" min="" max="200">
+
+            <button id="clear-filters">Limpiar filtros</button>
+        </aside>
+
+        <section>
+
+            <h2>LISTADO DE POKÉMON</h2>
+            <!--Resultados búsqueda-->
+            <div id="results-info"></div>
+
+            <!-- Ordenar resultados -->
+            <select id="sort-select">
+                <option value="id-asc">Nº Pokémon (asc)</option>
+                <option value="id-desc">Nº Pokémon (desc)</option>
+
+                <option value="hp-desc">HP (más fuerte)</option>
+                <option value="hp-asc">HP (más débil)</option>
+
+                <option value="attack-desc">Ataque (más fuerte)</option>
+                <option value="attack-asc">Ataque (más débil)</option>
+            </select>
+
+            <!-- Renderizar Pokémons (cartas)-->
+            <div id="ui-state"></div>
+            <div id="container-pokemon"></div>
+
+            <div id="pokemon-detail"></div>
+            
+            <!-- Paginación -->
+            <div id="pagination"></div>
+
+        </section>
+
+    </main>
+    <footer>
+    </footer>
+
+    <script type="module" src="./src/js/main.js"></script>
+</body>
+</html>
