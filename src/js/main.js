@@ -88,19 +88,7 @@ function updateTotalPokemon(total) {
     el.textContent = `${total} Pokémon`;
 }
 
-// Obtener TIPOS
-function getPokemonTypes(pokemon) {
-
-    if (!pokemon || !pokemon.types) {
-        return [];
-    }
-
-    return pokemon.types.map(
-        t => t.type.name
-    );
-}
-
-// Cargar tipos de los Pokemon
+// Cargar tipos de los Pokemon - PokeAPI
 async function loadTypes() {
 
     const res = await fetch("https://pokeapi.co/api/v2/type");
@@ -113,26 +101,42 @@ async function loadTypes() {
     renderTypeButtons();
 }
 
-// Cargar generaciones
+// Obtener TIPOS
+function getPokemonTypes(pokemon) {
+
+    if (!pokemon || !pokemon.types) {
+        return [];
+    }
+
+    return pokemon.types.map(
+        t => t.type.name
+    );
+}
+
+// Cargar generaciones - axios
 async function loadGenerations() {
 
-    const res = await fetch("https://pokeapi.co/api/v2/generation");
-    const data = await res.json();
+    try {
+        const { data } = await axios.get("https://pokeapi.co/api/v2/generation");
 
-    generations = await Promise.all(
-        data.results.map(async gen => {
+        generations = await Promise.all(
+            data.results.map(async gen => {
 
-            const r = await fetch(gen.url);
-            const detail = await r.json();
+                const {data: detail } = await axios.get(gen.url);
+                
+                return {
+                    name: gen.name,
+                    pokemon: detail.pokemon_species.map(p => p.name)
+                };
+            })
+        );
 
-            return {
-                name: gen.name,
-                pokemon: detail.pokemon_species.map(p => p.name)
-            };
-        })
-    );
-
-    renderGenerationButtons();
+        renderGenerationButtons();
+        
+    } catch (error) {
+        console.error("Error al cargar generaciones: ", error);
+    }
+    
 }
 
 // Renderizar los tipos en botones
